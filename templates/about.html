@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content%}
+<h1>About page</h1>
+{{ session.get('bgColor') }}
+<br>
+{{ session.get('name') }}
+<br>
+{# session['i'] #}
+{% endblock content %}

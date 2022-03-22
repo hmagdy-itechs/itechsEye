@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<body>
+  <h2>Image recognition and reverse image search.</h2>
+  <div class="main">
+    <h3>Account Summary:</h3>
+    Remaining Searches:<input class="rem1" id="remaining_searches" type="number"
+      value="{{posts[1].total_remaining_searches}}" readonly><br><br>
+    Expiration Date:<input class="rem" id="remaining_searches_date" type="input"
+      value="{{posts[1].bundles[0].expire_date}}" readonly>
+  </div>
+  <div id=stats class=stats>
+    <h3 class="stat">Result Summary:</h3>
+    <p class="left">Total Results: {{ posts[0][1].total_results }}</p>
+    <p class="right">Total Collection: {{ posts[0][1].total_collection }}</p>
+    <p class="left">Total Stock: {{ posts[0][1].total_stock }}</p>
+    <p class="right">Total Backlinks: {{ posts[0][1].total_backlinks }}</p>
+    <!-- {% for post in posts[0][0] %}
+       Crawl Date: {{post.backlinks[0].crawl_date[0]}}
+       Crawl Date: {{post.backlinks[0].crawl_date[-1]}}
+       {% endfor %} -->
+    <!--Total Domains Unavailable: {{ posts[0][1].total_domains_unavailable }}<br>
+       Total Filtered Results: {{ posts[0][1].total_filtered_results }}<br>
+       Timestamp: {{ posts[0][1].timestamp }}<br>
+       Query Time: {{ posts[0][1].query_time }}</p>-->
+  </div>
+  <div class="mains">
+    <label for="selectform_type">Searching Method:</label>
+    <select class="sel" id="selectform_type" name="order">
+      <option value="1" selected>Uploading an Image</option>
+      <option value="2">URL</option>
+    </select>
+    <br><br>
+    <form id="urlimg_form" action="/getimage" method="post">
+      <input name="imgurl" id="imgurl" type="url" placeholder="https://example.com/" />
+
+
+      <br />
+      <label for="sorting">Sort:</label>
+
+      <select id="sorting" name="sort">
+        <option value="crawl_date" selected>Crawl Date</option>
+        <option value="score">Score</option>
+      </select> &nbsp;&nbsp;
+      <label for="order">Order:</label>
+      <select id="order" name="order">
+        <option value="desc">desc</option>
+        <option value="asc" selected>asc</option>
+      </select>&nbsp;&nbsp;
+      <label for="limit">Limit:</label>
+      <select id="limit" name="limit">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100" selected>100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+        <option value="1500">1500</option>
+        <option value="2000">2000</option>
+        <option value="2500">2500</option>
+      </select>
+      <br /><br />
+
+      <input class="sub" type="submit" />
+    </form>
+
+
+    <form id="searchimg_form" action="/searchimg" method="post" enctype="multipart/form-data">
+      <input type="file" id="imgfile" name="imgfile" />
+
+      <br /><br />
+      <label for="sorting">Sort:</label>
+
+      <select id="sorting" name="sort">
+        <option value="crawl_date" selected>Crawl Date</option>
+        <option value="score">Score</option>
+      </select> &nbsp;&nbsp;
+      <label for="order">Order:</label>
+      <select id="order" name="order">
+        <option value="desc">desc</option>
+        <option value="asc" selected>asc</option>
+      </select> &nbsp;&nbsp;
+      <label for="limit">Limit:</label>
+      <select id="limit" name="limit">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+        <option value="100" selected>100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+        <option value="1500">1500</option>
+        <option value="2000">2000</option>
+        <option value="2500">2500</option>
+      </select>
+      <br />
+
+      <input id="submit" class="sub" type="submit" />
+    </form><br>
+  </div>
+
+  {# <img id="picture" src="data:image/jpeg;base64,{{ img_data }}"> #}
+
+  <div class="overflow-auto">
+    {% for post in posts[0][0] %}
+    <p class="con">
+      <img src="{{post.image_url}}"/><br>
+      Score: {{post.score}}<br><br>
+      Crawl Date:{{post.backlinks[0].crawl_date}}<br><br>
+      IMG URL:<a href="{{post.backlinks[0].backlink}}" target="_blank">{{post.backlinks[0].backlink}}</a>
+      <!-- Img_Url:{{post.image_url}}<br> -->
+    </p>
+    {% endfor %}
+  </div>
+
+  <!-- The Display block with JS -->
+  <script>
+  document.getElementById("stats").style["display"] = "block";
+    BS("searchimg_form", "urlimg_form");
+    var selectform_type = document.getElementById('selectform_type').addEventListener('change', function (evt) {
+      var selectform_value = document.getElementById('selectform_type').value;
+      if (selectform_value == 1) { BS("searchimg_form", "urlimg_form"); }
+      else { BS("urlimg_form", "searchimg_form"); }
+    }, false)
+  </script>
+  <!-- End block -->
+
+  {% endblock %}

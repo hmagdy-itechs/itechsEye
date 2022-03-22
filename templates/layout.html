@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>iTechsEye Reverse Image Search</title>
+  <link rel="icon" href="{{ url_for('static', filename='./img/Itechs-Logo.png')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='./css/style.css')}}">
+</head>
+<!--This is instead of calling a js file in #static folder --since there is no js files-- -->
+<script>function blockshow(I1, I2) { document.getElementById(I1).style["display"] = "block"; document.getElementById(I2).style["display"] = "none"; } BS = blockshow;</script>
+
+<body>
+  <header>
+    <div role="toolbar">
+      <!-- &nbsp;iTechsEye -->
+      <img class="logo1" src="../static/img/Itechs-Logo.png">iTechsEye
+      <img class="logo" src="../static/img/Logo.png">
+    </div>
+  </header>
+  {% block content %} {%endblock %}
+  <footer>
+    All Rights Reserved © 2021
+  </footer>
+</body>
+
+</html>

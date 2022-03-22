@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>ItechEye Reverse Image Search</title>
+        <link rel="icon" href="/img/tineye.png">
+        <link rel="stylesheet" href="/css/style.css">
+    </head>   
+    <body>
+        <div class="main">
+            {{>header}}
+            <p>Image recognition and reverse image search.<br><br> Search by URL or Upload image.</p>
+
+            <form>
+                <input id="url" type="url" placeholder="https://example.com" size="35"><br><br>
+                <input id="file" type="file" class="multi maxsize-1024" accept="image/png, image/gif, image/jpeg, image/bmp, image/tiff">
+                <p>Accepted Images types are as follows:<br>(.PNG, .GIF, .JPEG, .BMP, .TIFF)<br>Max-Image Size: 1MB</p>
+                <button>
+                    Search
+                </button>
+            </form>
+
+            <p id='message-1'></p>
+            <p id='message-2'></p>
+        </div>
+        
+        {{>footer}}
+    <script src="/js/imagesearch.js" ></script>
+    </body>
+</html>
